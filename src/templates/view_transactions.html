@@ -1,0 +1,38 @@
+<!DOCTYPE html>  
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Flask App</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+<body>
+
+<table class="scrolldown">
+    <thead>
+        <tr>
+            <th>Column 0:</th>
+            <th>Column 1:</th>
+            <th>Column 2:</th>
+            <th>Column 3:</th>
+            <th>Column 4:</th>    
+        </tr>
+</thead>
+
+<tbody>
+    {% for row in dbhtml %}
+    <tr>
+        <td>{{row.0}}</td>
+        <td>{{row.1}}</td>
+        <td>{{row.2}}</td>
+        <td>{{row.3}}</td>
+        <td>{{row.4}}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>My Flask App</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <script>
+  
+   function callme(e)
+   {
+
+      //alert(e.innerHTML)
+      let start_index = e.innerHTML.indexOf('setRowId');
+      let end_index = e.innerHTML.indexOf('</td>');
+      //let result = e.innerHTML.substring(start_index, start_index + 40)
+      let result = e.innerHTML.substring(72, end_index)
+
+      //alert(result)
+
+      e.style.backgroundColor=(e.style.backgroundColor=='yellow')?('transparent'):('yellow');
+
+      var cells = document.getElementsByTagName("tr");
+      for (var i = 0; i < cells.length; i++) {
+        if (cells[i].innerHTML != e.innerHTML) {
+          cells[i].style.backgroundColor=(e.style.backgroundColor=='white')?('transparent'):('white');
+        }
+        
+      }
+
+      document.getElementById("selected_row_id").value = result; 
+
+     
+   }
+
+   function setRowId(e)
+   {
+      document.getElementById("selected_row_id").value = e.innerHTML;    
+   }
+  </script>
+   <body>
+      <form id="myForm" action = {{ send_transaction_to_edit }} method = "post">
+         <p><h1>View and Edit Transactions</h1></p>
+
+         <table class="scrolldown">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>USER_NAME</th>
+                    <th>TICKER</th>
+                    <th>EXPIRATION_DATE</th>
+                    <th>STRIKE</th>
+                    <th>CALL_BUY</th>
+                    <th>BUY_SELL</th>
+                    <th>DELTA</th>
+                    <th>VOLUME</th>
+                    <th>BID_ASK</th>
+                    <th>ROR</th>
+                    <th>IV</th>
+                    <th>NOTES</th>
+                    <th>RESULT</th>    
+                </tr>
+        </thead>
+        
+        <tbody>
+            {% for row in dbhtml %}
+            <tr id="rows" onclick="callme(this)">
+                <td id="row_id" name="row_id" onclick="setRowId(this)">{{row.0}}</td>
+                <td>{{row.1}}</td>
+                <td>{{row.2}}</td>
+                <td>{{row.3}}</td>
+                <td>{{row.4}}</td>
+                <td>{{row.5}}</td>
+                <td>{{row.6}}</td>
+                <td>{{row.7}}</td>
+                <td>{{row.8}}</td>
+                <td>{{row.9}}</td>
+                <td>{{row.10}}</td>
+                <td>{{row.11}}</td>
+                <td>{{row.12}}</td>
+                <td>{{row.13}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+        </table>
+         
+         <p><input type = "submit" value = "View and Edit" /></p>
+
+         <p><a href = {{ view_home }}>Back to Home</a></p>
+
+         <input type="hidden" id="selected_row_id" name="selected_row_id"/>
+      </form>
+   </body>
+</html>

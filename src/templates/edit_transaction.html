@@ -1,0 +1,90 @@
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>My Flask App</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+   <body>
+      <form action = {{ edit_transaction_to_edit }} method = "post">
+
+         <p><h1>Edit Transaction</h1></p>
+
+         <table class="onerow">
+            <thead>
+               <tr>
+                   <th>ID</th>
+                   <th>USER_NAME</th>
+                   <th>TICKER</th>
+                   <th>EXPIRATION_DATE</th>
+                   <th>STRIKE</th>
+                   <th>CALL_BUY</th>
+                   <th>BUY_SELL</th>
+                   <th>DELTA</th>
+                   <th>VOLUME</th>
+                   <th>BID_ASK</th>
+                   <th>ROR</th>
+                   <th>IV</th>
+               </tr>
+       </thead>
+
+       <tbody>
+
+         {% for row in dbhtml %}
+         
+            <tr>
+               <td>{{row.0}}</td>
+               <td>{{row.1}}</td>
+                <td>{{row.2}}</td>
+                <td>{{row.3}}</td>
+                <td>{{row.4}}</td>
+                <td>{{row.5}}</td>
+                <td>{{row.6}}</td>
+                <td>{{row.7}}</td>
+                <td>{{row.8}}</td>
+                <td>{{row.9}}</td>
+                <td>{{row.10}}</td>
+                <td>{{row.11}}</td>
+            </tr>  
+           
+
+         {% endfor %}
+
+         </tbody>
+
+         </table>
+
+         {% for row in dbhtml %}
+            <p><input type="hidden" id="row_id" name="row_id" value={{row.0}}></p>
+
+            <p>Notes:
+            <textarea id="notes" name="notes" rows="4" cols="50">{{row.12}}</textarea></p>
+
+            <p>Result:
+            <select id="result" name="result">
+               <option value="None">None</option>
+               <option value="Assigned">Assigned</option>
+               <option value="Called Away">Called Away</option>
+               <option value="Closed">Closed</option>
+               <option value="Expired">Espired</option>
+               <option value="Open">Open</option>
+    
+               <option value="Rolled">Rolled</option>
+             </select>
+             
+             <script>
+               const selectElement = document.getElementById('mySelect');
+               selectElement.value = '{{row.13}}'; 
+             </script>
+         {% endfor %}
+
+         
+         
+         <p><input type = "submit" value = "Edit" id="operation" name="operation"/>
+
+         <input type = "submit" value = "Delete" id="operation" name="operation"/></p>
+
+         <p><a href = {{ view_home }}>Back to Home</a></p>
+      </form>
+   </body>
+</html>

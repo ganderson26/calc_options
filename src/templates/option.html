@@ -1,0 +1,34 @@
+<html>
+   <!--http://26miles.com/options/login-->
+   <!--http://127.0.0.1:5000/login-->
+   <body>
+      <form action = {{ view_login }} method = "post">
+         <p><h1>Collecting data for future analysis.</h1></p>
+         <p><h1>There is little error checking. Enter the data as described.</h1></p>
+         <p>Name: (A way to identify your transactions. No spaces or special characters) <input type = "text" name = "name" placeholder="max" required></p>
+         <p>Ticker: (Stock symbol)<input type = "text" name = "ticker" placeholder="MSTR" required></p>
+         <p>Expiration Date: (mm-dd-yyyy) <input type = "text" name = "expiration_date" placeholder="12-20-2024" required></p>
+         <p>Strike: (Float) <input type = "text" name = "strike" placeholder="300.00" required></p>
+         <p>
+            <input type="radio" id="put" name="call_put" value="Put" checked="checked" required>
+            <label for="put">Put</label>
+            <input type="radio" id="call" name="call_put" value="Call" required>
+            <label for="call">Call</label>    
+         </p>
+         <p>
+            <input type="radio" id="sell" name="buy_sell" value="Sell" checked="checked" required>
+            <label for="sell">Sell</label>
+            <input type="radio" id="buy" name="buy_sell" value="Buy" required>
+            <label for="buy">Buy</label>     
+         </p>
+         <p>
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" rows="4" cols="50" required></textarea>   
+         </p>
+
+         <p><input type = "submit" value = "Submit" /></p>
+
+         <p><a href= {{ view_home }} >Back to Home</a></p>
+      </form>
+   </body>
+</html>
