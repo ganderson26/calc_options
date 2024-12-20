@@ -1,21 +1,21 @@
 # Project Title
 
-Simple overview of use/purpose.
+calc_options
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+Gather Option Data for the contract.
 
 ## Getting Started
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+* Install MySQL
+* Install Python packages
 
 ### Installing
 
-* Install requirements
+
 * Install MySQL 8.0.40
 * Install Python packages
 ```
@@ -95,10 +95,12 @@ pip install mysql-connector-python
 Max Glenn Anderson
 
 ## Version History
+
 * 0.1.0
     * Initial Release
 
 ## License
+
 * [LICENSE](LICENSE)
 
 ## Acknowledgments
