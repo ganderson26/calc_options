@@ -1,7 +1,7 @@
 # flask --app options_flask --debug run
 # app.logger.info('This is info output')
 
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, Response
 from yahoo_fin import options
 from yahoo_fin import stock_info as si
 import numpy as np
@@ -11,30 +11,64 @@ from datetime import *
 import mysql.connector
 from urllib.parse import unquote
 
-# Set for local or godaddy
-##mysql_user = "jejtxlk4zmlg" # godaddy
-mysql_user = "root" # local
+import os
 
-##view_login = "http://26miles.com/options/login"  # godaddy
-view_login = "http://127.0.0.1:5000/login"  # local
+# Get an environment variable
+value = os.getenv('LOCAL')
+print(value)
 
-##view_home = "http://26miles.com/options/" # godaddy
-view_home = "http://127.0.0.1:5000/" # local
+if value == "LOCAL":
 
-##send_transaction_to_edit = "http://26miles.com/options/send_transaction" # godaddy
-send_transaction_to_edit = "http://127.0.0.1:5000/send_transaction" # local
+    # Set for local or godaddy
+    ##mysql_user = "jejtxlk4zmlg" # godaddy
+    mysql_user = "root" # local
 
-##edit_transaction_to_edit = "http://26miles.com/options/edit_transaction" # godaddy
-edit_transaction_to_edit = "http://127.0.0.1:5000/edit_transaction" # local
+    ##view_login = "http://26miles.com/options/login"  # godaddy
+    view_login = "http://127.0.0.1:5000/login"  # local
 
-##view_index = "http://26miles.com/options/index" # godaddy
-view_index = "http://127.0.0.1:5000/index" # local
+    ##view_home = "http://26miles.com/options/" # godaddy
+    view_home = "http://127.0.0.1:5000/" # local
 
-##view_option = "http://26miles.com/options/option" # godaddy
-view_option = "http://127.0.0.1:5000/option" # local
+    ##send_transaction_to_edit = "http://26miles.com/options/send_transaction" # godaddy
+    send_transaction_to_edit = "http://127.0.0.1:5000/send_transaction" # local
 
-##view_transactions = "http://26miles.com/options/transactions" # godaddy
-view_transactions = "http://127.0.0.1:5000/transactions" # local
+    ##edit_transaction_to_edit = "http://26miles.com/options/edit_transaction" # godaddy
+    edit_transaction_to_edit = "http://127.0.0.1:5000/edit_transaction" # local
+
+    ##view_index = "http://26miles.com/options/index" # godaddy
+    view_index = "http://127.0.0.1:5000/index" # local
+
+    ##view_option = "http://26miles.com/options/option" # godaddy
+    view_option = "http://127.0.0.1:5000/option" # local
+
+    ##view_transactions = "http://26miles.com/options/transactions" # godaddy
+    view_transactions = "http://127.0.0.1:5000/transactions" # local
+else:
+    # Set for local or godaddy
+    mysql_user = "jejtxlk4zmlg" # godaddy
+    ##mysql_user = "root" # local
+
+    view_login = "http://26miles.com/options/login"  # godaddy
+    ##view_login = "http://127.0.0.1:5000/login"  # local
+
+    view_home = "http://26miles.com/options/" # godaddy
+    ##view_home = "http://127.0.0.1:5000/" # local
+
+    send_transaction_to_edit = "http://26miles.com/options/send_transaction" # godaddy
+    ##send_transaction_to_edit = "http://127.0.0.1:5000/send_transaction" # local
+
+    edit_transaction_to_edit = "http://26miles.com/options/edit_transaction" # godaddy
+    ##edit_transaction_to_edit = "http://127.0.0.1:5000/edit_transaction" # local
+
+    view_index = "http://26miles.com/options/index" # godaddy
+    ##view_index = "http://127.0.0.1:5000/index" # local
+
+    view_option = "http://26miles.com/options/option" # godaddy
+    ##view_option = "http://127.0.0.1:5000/option" # local
+
+    view_transactions = "http://26miles.com/options/transactions" # godaddy
+    ##view_transactions = "http://127.0.0.1:5000/transactions" # local
+
 
 mydb = mysql.connector.connect(
 host="localhost",
@@ -128,14 +162,33 @@ def send_transaction():
     else:
         selected_row_id = request.args.get['selected_row_id']
 
-    #return "<p>" + selected_row_id + "</p>"
-    try: 
-        mycursor = mydb.cursor() 
-        mycursor.execute("SELECT * FROM OPTIONS_DATA WHERE ID = " + selected_row_id) 
-        db = mycursor.fetchall() 
-        return render_template("edit_transaction.html", dbhtml=db, edit_transaction_to_edit=edit_transaction_to_edit, view_home=view_home)                                   
-    except Exception as e: 
-        return(str(e))
+    print(selected_row_id)    
+
+    if selected_row_id == "download":
+        try: 
+            mycursor = mydb.cursor() 
+            mycursor.execute("SELECT * FROM OPTIONS_DATA") 
+            db = mycursor.fetchall() 
+            # Create a temporary CSV file and serve it for download
+            df = pd.DataFrame(db)
+            return Response(
+                df.to_csv(),
+                mimetype="text/csv",
+                headers={"Content-disposition":
+                "attachment; filename=transactions.csv"})                                  
+        except Exception as e: 
+            return(str(e))
+
+    else:        
+
+        #return "<p>" + selected_row_id + "</p>"
+        try: 
+            mycursor = mydb.cursor() 
+            mycursor.execute("SELECT * FROM OPTIONS_DATA WHERE ID = " + selected_row_id) 
+            db = mycursor.fetchall() 
+            return render_template("edit_transaction.html", dbhtml=db, edit_transaction_to_edit=edit_transaction_to_edit, view_home=view_home)                                   
+        except Exception as e: 
+            return(str(e))
     
 @app.route('/edit_transaction/', methods=['POST', 'GET'])
 def edit_transaction():

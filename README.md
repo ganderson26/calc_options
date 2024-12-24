@@ -8,58 +8,39 @@ Gather Option Data for the contract.
 
 ## Getting Started
 
-### Dependencies
+### For Local Development
+
+#### Dependencies
 
 * Install MySQL
 * Install Python packages
 
-### Installing
+#### Installing
 
-
-* Install MySQL 8.0.40
+* Install MySQL 8.0.40, create the Database and Table
 * Install Python packages
 ```
-pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python
+pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python Flask.Response
 ```
 
-### Executing program
+#### Executing program
 
 * How to run the program
 * Step-by-step
-* For Development on Local, comment out godaddy and uncomment local variables
+* For Development on Local, add an environment variable named LOCAL and set to LOCAL. I did this in ~/.bash_profile
+* The variable is used in options_flask.py to set the MySQL connection to use the local instance of the database and set all URLs to the local instance of the application. When deployed to GoDaddy, you will need to create the environment variable and set to GODADDY in order to use their server.
 ```
-# Set for local or godaddy
-##mysql_user = "jejtxlk4zmlg" # godaddy
-mysql_user = "root" # local
-
-##view_login = "http://26miles.com/options/login"  # godaddy
-view_login = "http://127.0.0.1:5000/login"  # local
-
-##view_home = "http://26miles.com/options/" # godaddy
-view_home = "http://127.0.0.1:5000/" # local
-
-##send_transaction_to_edit = "http://26miles.com/options/send_transaction" # godaddy
-send_transaction_to_edit = "http://127.0.0.1:5000/send_transaction" # local
-
-##edit_transaction_to_edit = "http://26miles.com/options/edit_transaction" # godaddy
-edit_transaction_to_edit = "http://127.0.0.1:5000/edit_transaction" # local
-
-##view_index = "http://26miles.com/options/index" # godaddy
-view_index = "http://127.0.0.1:5000/index" # local
-
-##view_option = "http://26miles.com/options/option" # godaddy
-view_option = "http://127.0.0.1:5000/option" # local
-
-##view_transactions = "http://26miles.com/options/transactions" # godaddy
-view_transactions = "http://127.0.0.1:5000/transactions" # local
-
+# Set environment variable for Python apps
+export LOCAL="LOCAL"
 ```
+
 * cd to src folder
+* * Then run the flask command
 ```
 flask --app options_flask --debug run
 ```
 
-* Then run the flask command and you should see:
+ * You should see:
 ```
  * Serving Flask app 'options_flask'
  * Debug mode: on
@@ -70,13 +51,84 @@ Press CTRL+C to quit
  * Debugger is active!
  * Debugger PIN: 427-590-107
 ```
+ * Open and browser and go the address
 
 ![alt text](image.png)
 
-* Exit
+* Exit from the terminal/bash
 ```
 ctrl-c
 ```
+
+
+#### For GoDaddy Deployment and running
+
+
+
+#### Dependencies
+
+* Create MySQL Database and Table
+* Create a Python Application
+* Create environment variable 
+* Install Python packages
+* Upload application
+* Run
+
+#### Create MySQL Database and Table
+
+* Log into GoDaddy, select your Domain and go to cPanel
+* Select MySQL Databases
+* Create the Database and Table
+
+#### Create a Python Application
+
+* Log into GoDaddy, select your Domain and go to cPanel
+* Create a Python Application
+
+![alt text](image-1.png)
+
+#### Create environment variable
+
+* Scroll down and create the environment variable 
+
+![alt text](image-2.png)
+
+
+#### Installing Packages
+
+* From your local terminal/bash, SSH into the GoDaddy server
+* You will need to get the server address
+* And add SSH
+```
+$ssh jejtxlk4zmlg@50.63.7.156
+jejtxlk4zmlg@50.63.7.156's password: ************
+jejtxlk4zmlg@p3plzcpnl505185 [~]$ 
+```
+
+* Change directory to the directory created by GoDaddy
+```
+source /home/jejtxlk4zmlg/virtualenv/options/3.9/bin/activate && cd /home/jejtxlk4zmlg/options
+```
+
+* Install Python packages
+```
+pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python Flask.Response
+```
+
+#### Upload your Application
+
+* I used FileZilla to create the folder structure and upload the application
+
+![alt text](image-3.png)
+
+#### Executing program
+
+* On the cPanel Application, click Run or Restart
+* Click Open
+
+
+
+
 
 ## Help
 
@@ -96,6 +148,10 @@ Max Glenn Anderson
 
 ## Version History
 
+* 0.2.0
+    * Set connection variables based on environment variable LOCAL
+    * Export transactions to CSV
+    * Disable/Enable View Edit button on transactions.html
 * 0.1.0
     * Initial Release
 

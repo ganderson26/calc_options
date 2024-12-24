@@ -1,0 +1,32 @@
+https://host.godaddy.com/webhosting/cpanel/account/4b2a4b19-0f45-4c9b-b600-b4a837e5d68b/view
+
+50.63.7.156
+jejtxlk4zmlg
+Marathon#262
+
+source /home/jejtxlk4zmlg/virtualenv/options/2.7/bin/activate && cd /home/jejtxlk4zmlg/options
+
+https://p3plzcpnl505185.prod.phx3.secureserver.net:2083/cpsess3944159500/frontend/jupiter/index.html?login=1&post_login=86081395702217
+
+
+SSH
+(base) ganderson@Glenns-MacBook-Pro-3.local:~$ssh jejtxlk4zmlg@50.63.7.156
+jejtxlk4zmlg@50.63.7.156's password: 
+jejtxlk4zmlg@p3plzcpnl505185 [~]$ 
+
+
+
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/jejtxlk4zmlg/options"
+PassengerBaseURI "/"
+PassengerPython "/home/jejtxlk4zmlg/options/env/lib/python3.12"
+PassengerAppLogFile "/home/jejtxlk4zmlg/options/logs/app.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+# Turn off directory index if necessary
+Options -Indexes
+
+
+
+source /home/jejtxlk4zmlg/virtualenv/options/3.9/bin/activate && cd /home/jejtxlk4zmlg/options
+

@@ -30,12 +30,21 @@
 
       document.getElementById("selected_row_id").value = result; 
 
+      // Enable the submit button
+      document.getElementById("edit").disabled = false;
      
    }
 
+   // Not really needed anymore
    function setRowId(e)
    {
       document.getElementById("selected_row_id").value = e.innerHTML;    
+   }
+
+   function download_transactions(e)
+   {
+      document.getElementById("selected_row_id").value = "download";  
+      document.getElementById("myForm").submit()  
    }
   </script>
    <body>
@@ -85,7 +94,9 @@
         
         </table>
          
-         <p><input type = "submit" value = "View and Edit" /></p>
+         <p><input id="edit" name="edit" type="submit" value="View and Edit" disabled/></p>
+
+         <p><input id="download" name="download" type="button" value="Download to CSV" onclick="download_transactions(this)"/></p>
 
          <p><a href = {{ view_home }}>Back to Home</a></p>
 
