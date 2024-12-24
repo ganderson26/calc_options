@@ -17,7 +17,28 @@ Gather Option Data for the contract.
 
 #### Installing
 
-* Install MySQL 8.0.40, create the Database and Table
+* Install MySQL 8.0.40 and MSQL Workbench to create the Database OPTIONS and Table OPTIONS_DATA
+```
+CREATE TABLE `OPTIONS_DATA` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `USER_NAME` varchar(45) DEFAULT NULL,
+  `TICKER` varchar(45) DEFAULT NULL,
+  `EXPIRATION_DATE` date DEFAULT NULL,
+  `STRIKE` float DEFAULT NULL,
+  `CALL_PUT` varchar(45) DEFAULT NULL,
+  `BUY_SELL` varchar(45) DEFAULT NULL,
+  `DELTA` float DEFAULT NULL,
+  `VOLUME` float DEFAULT NULL,
+  `BID_ASK` float DEFAULT NULL,
+  `ROR` float DEFAULT NULL,
+  `IV` float DEFAULT NULL,
+  `NOTES` varchar(256) DEFAULT NULL,
+  `RESULT` varchar(45) DEFAULT NULL,
+  `TRANS_TIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+```
+
 * Install Python packages
 ```
 pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python Flask.Response
@@ -127,7 +148,13 @@ pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python F
 * Click Open
 
 
-
+## GitHub
+```
+git add .
+git status
+git commit -m "message"
+git push
+```
 
 
 ## Help
