@@ -10,14 +10,8 @@ Gather Option Data for the contract.
 
 ### For Local Development
 
-#### Dependencies
-
-* Install MySQL
-* Install Python packages
-
-#### Installing
-
-* Install MySQL 8.0.40 and MSQL Workbench to create the Database OPTIONS and Table OPTIONS_DATA
+#### Install MySQL
+* Install MySQL 8.0.40 and MSQL Workbench to create the Database OPTIONS and Tables OPTIONS_DATA and ACCOUNT
 ```
 CREATE TABLE `OPTIONS_DATA` (
   `ID` int NOT NULL AUTO_INCREMENT,
@@ -39,15 +33,24 @@ CREATE TABLE `OPTIONS_DATA` (
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 ```
 
+```
+CREATE TABLE `OPTIONS`.`ACCOUNT` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `USER_NAME` VARCHAR(45) NOT NULL,
+  `PASSWORD` VARCHAR(45) NOT NULL,
+  `EMAIL` VARCHAR(100) NOT NULL,
+  `CREATED_TIMESTAMP` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE INDEX `USER_NAME_UNIQUE` (`USER_NAME` ASC) VISIBLE,
+  PRIMARY KEY (`ID`));
+```
+
+#### Install Python packages
 * Install Python packages
 ```
 pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python Flask.Response
 ```
 
-#### Executing program
-
-* How to run the program
-* Step-by-step
+#### Environment variable
 * For Development on Local, add an environment variable named LOCAL and set to LOCAL. I did this in ~/.bash_profile
 * The variable is used in options_flask.py to set the MySQL connection to use the local instance of the database and set all URLs to the local instance of the application. When deployed to GoDaddy, you will need to create the environment variable and set to GODADDY in order to use their server.
 ```
@@ -55,6 +58,7 @@ pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python F
 export LOCAL="LOCAL"
 ```
 
+#### Executing the application
 * cd to src folder
 * * Then run the flask command
 ```
@@ -82,28 +86,16 @@ ctrl-c
 ```
 
 
-#### For GoDaddy Deployment and running
+### For GoDaddy Deployment and running
 
-
-
-#### Dependencies
-
-* Create MySQL Database and Table
-* Create a Python Application
-* Create environment variable 
-* Install Python packages
-* Upload application
-* Run
-
-#### Create MySQL Database and Table
-
+#### Create MySQL Database and Tables
 * Log into GoDaddy, select your Domain and go to cPanel
 * Select MySQL Databases
 * Create the Database and Table
 
 #### Create a Python Application
-
 * Log into GoDaddy, select your Domain and go to cPanel
+* From Tools, select Setup Python App. Later same steps but will see your Application
 * Create a Python Application
 
 ![alt text](image-1.png)
@@ -116,10 +108,9 @@ ctrl-c
 
 
 #### Installing Packages
-
 * From your local terminal/bash, SSH into the GoDaddy server
 * You will need to get the server address
-* And add SSH
+* And add SSH to your GoDaddy server
 ```
 $ssh jejtxlk4zmlg@50.63.7.156
 jejtxlk4zmlg@50.63.7.156's password: ************
@@ -137,25 +128,23 @@ pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python F
 ```
 
 #### Upload your Application
-
 * I used FileZilla to create the folder structure and upload the application
 
 ![alt text](image-3.png)
 
 #### Executing program
-
 * On the cPanel Application, click Run or Restart
 * Click Open
 
 
 ## GitHub
 ```
+git checkout -b branchname
 git add .
 git status
 git commit -m "message"
-git push
+git push -u origin branchname
 ```
-
 
 ## Help
 
@@ -174,7 +163,10 @@ pip install mysql-connector-python
 Max Glenn Anderson
 
 ## Version History
-
+* 0.3.0
+    * Added Login/Register
+    * Use user_name for transactions instead of entering
+    * View transactions only for your user_name
 * 0.2.0
     * Set connection variables based on environment variable LOCAL
     * Export transactions to CSV

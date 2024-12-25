@@ -30,3 +30,14 @@ Options -Indexes
 
 source /home/jejtxlk4zmlg/virtualenv/options/3.9/bin/activate && cd /home/jejtxlk4zmlg/options
 
+
+login
+https://www.geeksforgeeks.org/login-and-registration-project-using-flask-and-mysql/
+
+maybe add encryption and forgot password
+https://freelancefootprints.substack.com/p/yet-another-password-reset-tutorial
+
+from werkzeug.security import generate_password_hash, check_password_hash
+
+# When registering a new user
+hashed_password = generate_password_hash(password, method='pbkdf2:sha256')

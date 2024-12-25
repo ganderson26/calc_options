@@ -1,0 +1,21 @@
+<!-- Store this code in 'login.html' file inside the 'templates' folder -->
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> Login </title>
+				 
+	</head>
+	<body>
+		<h1>Login</h1>
+		    <h2>
+				<form action = {{ view_login }} method="post">
+				<div>{{ msg }}</div></br>
+					<input id="user_name" name="user_name" type="text" placeholder="Enter Your Username" /></br></br>
+					<input id="password" name="password" type="password" placeholder="Enter Your Password" /></br></br></br>
+					<input type="submit" class="btn" value="Sign In"></br></br>
+				</form>
+			</h2>
+			<p>Don't have an account? <a href = {{ send_register }}>Sign Up here</a></p>
+	</body>
+</html>

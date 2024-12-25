@@ -1,11 +1,11 @@
 <html>
-   <!--http://26miles.com/options/login-->
-   <!--http://127.0.0.1:5000/login-->
+   <!--http://26miles.com/options/createoption-->
+   <!--http://127.0.0.1:5000/createoption-->
    <body>
-      <form action = {{ view_login }} method = "post">
+      <form action = {{ create_option }} method = "post">
          <p><h1>Collecting data for future analysis.</h1></p>
          <p><h1>There is little error checking. Enter the data as described.</h1></p>
-         <p>Name: (A way to identify your transactions. No spaces or special characters) <input type = "text" name = "name" placeholder="max" required></p>
+         <p>User Name: (A way to identify your transactions. Not editable.) <input type="text" name="name" value={{ session.user_name }} readonly></p>
          <p>Ticker: (Stock symbol)<input type = "text" name = "ticker" placeholder="MSTR" required></p>
          <p>Expiration Date: (mm-dd-yyyy) <input type = "text" name = "expiration_date" placeholder="12-20-2024" required></p>
          <p>Strike: (Float) <input type = "text" name = "strike" placeholder="300.00" required></p>
@@ -24,6 +24,18 @@
          <p>
             <label for="notes">Notes:</label>
             <textarea id="notes" name="notes" rows="4" cols="50" required></textarea>   
+         </p>
+         <p>
+            <label for="result">Result:</label>
+            <select id="result" name="result">
+               <option value="None">None</option>
+               <option value="Assigned">Assigned</option>
+               <option value="Called Away">Called Away</option>
+               <option value="Closed">Closed</option>
+               <option value="Expired">Espired</option>
+               <option value="Open">Open</option>
+               <option value="Rolled">Rolled</option>
+             </select>  
          </p>
 
          <p><input type = "submit" value = "Submit" /></p>

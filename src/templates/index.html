@@ -2,11 +2,15 @@
    <!--http://26miles.com/options/index-->
    <!--http://127.0.0.1:5000/index-->
    <body>
+      <h1>
+         Hello {{session.user_name}}!</br>               
+      </h1>
       <form action = {{ view_index }} method = "post">
          <p><h1>Collecting data for future analysis.</h1></p>
         
          <p><a href = {{ view_option }}>Enter Transaction</a></p>
          <p><a href = {{ view_transactions }}>View/Edit Transactions</a></p>
+         <p><a href = {{ send_logout }}>Logout</a></p>
       </form>
    </body>
 </html>

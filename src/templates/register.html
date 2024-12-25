@@ -1,0 +1,22 @@
+<!-- Store this code in 'register.html' file inside the 'templates' folder -->
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Register</title>
+					 
+	</head>
+	<body>
+	    <h1>Register</h1>
+			<h2>
+				<form action = {{ send_register }} method="post">
+				<div>{{ msg }}</div></br>
+					<input id="user_name" name="user_name" type="text" placeholder="Enter Your Username" required/></br></br>
+					<input id="password" name="password" type="password" placeholder="Enter Your Password" required/></br></br>
+					<input id="email" name="email" type="text" placeholder="Enter Your Email ID" required/></br></br>
+					<input type="submit" value="Sign Up"></br>
+				</form>
+			</h2>
+			<p>Already have an account? <a href = {{ view_login }}>Sign In here</a></p>
+	</body>
+</html>
