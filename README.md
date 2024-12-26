@@ -48,6 +48,7 @@ CREATE TABLE `OPTIONS`.`ACCOUNT` (
 * Install Python packages
 ```
 pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python Flask.Response
+pip install Werkzeug
 ```
 
 #### Environment variable

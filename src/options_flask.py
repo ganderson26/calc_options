@@ -10,9 +10,10 @@ import pandas as pd
 from datetime import *
 import mysql.connector
 from urllib.parse import unquote
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 import re
-
 import os
 
 # Get an environment variable
@@ -104,11 +105,11 @@ def delta_calc(r, q, S, K, T, sigma):
     try:
         d1 = (np.log(S/K)+(r - q +sigma**2/2)*T)/(sigma*np.sqrt(T))
 
-        print('d1', d1) # getting NaN on all for DELL
+        #print('d1', d1) # getting NaN on all for DELL
 
         r_delta_calc = norm.cdf(d1, 0, 1) 
 
-        print('r_delta_calc=', r_delta_calc)
+        #print('r_delta_calc=', r_delta_calc)
 
         r_delta_calc = r_delta_calc[~np.isnan(r_delta_calc)]
         
@@ -126,11 +127,11 @@ def delta_calc_calls(r, q, S, K, T, sigma):
         d1 = ((np.log(S/K)+(r - q +sigma**2/2)*T)/(sigma*np.sqrt(T)) - sigma*np.sqrt(T))
 
 
-        print('d1', d1) # getting NaN on all for DELL
+        #print('d1', d1) # getting NaN on all for DELL
 
         r_delta_calc = norm.cdf(d1, 0, 1) 
 
-        print('r_delta_calc=', r_delta_calc)
+        #print('r_delta_calc=', r_delta_calc)
 
         r_delta_calc = r_delta_calc[~np.isnan(r_delta_calc)]
         
@@ -172,7 +173,7 @@ def option():
 def transactions():
     try: 
         sql = "SELECT * FROM OPTIONS_DATA WHERE USER_NAME = '" + session['user_name'] + "'"
-        print(sql)
+        
         mycursor = mydb.cursor() 
         mycursor.execute(sql) 
         db = mycursor.fetchall() 
@@ -187,12 +188,12 @@ def send_transaction():
     else:
         selected_row_id = request.args.get['selected_row_id']
 
-    print(selected_row_id)    
+    #print(selected_row_id)    
 
     if selected_row_id == "download":
         try: 
             sql = "SELECT * FROM OPTIONS_DATA WHERE USER_NAME = '" + session['user_name'] + "'"
-            print(sql)
+            #print(sql)
             mycursor = mydb.cursor() 
             mycursor.execute(sql) 
             db = mycursor.fetchall() 
@@ -429,22 +430,27 @@ def login():
         user_name = request.form['user_name']
         password = request.form['password']
 
-        sql = "SELECT * FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "' AND PASSWORD = '" + password + "'"
-        values = (user_name, password)
+        #sql = "SELECT * FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "' AND PASSWORD = '" + password + "'"
+        #values = (user_name, password)
 
-        print(sql)
+        sql = "SELECT * FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "'"
+        values = (user_name)
+
+        #print(sql)
         
         mycursor = mydb.cursor()
 
         mycursor.execute(sql)
         
         account = mycursor.fetchone()
-        if account:
-            session['loggedin'] = True
-            session['id'] = account[0]
-            session['user_name'] = account[1]
-            msg = 'Logged in successfully!'
-            return render_template('index.html', msg=msg, view_index=view_index, view_option=view_option, view_transactions=view_transactions, send_logout=send_logout)
+
+        if check_password_hash(account[2], password):
+            if account:
+                session['loggedin'] = True
+                session['id'] = account[0]
+                session['user_name'] = account[1]
+                msg = 'Logged in successfully!'
+                return render_template('index.html', msg=msg, view_index=view_index, view_option=view_option, view_transactions=view_transactions, send_logout=send_logout)
         else:
             msg = 'Incorrect user_name / password!'
     return render_template('login.html', msg = msg, view_login=view_login, send_register=send_register)
@@ -463,10 +469,11 @@ def register():
         user_name = request.form['user_name']
         password = request.form['password']
         email = request.form['email']
+        hash_password = generate_password_hash(password)
 
-        print(user_name)
-        print(password)
-        print(email)
+        #print(user_name)
+        #print(password)
+        #print(email)
         
         sql = "SELECT * FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "'"
         values = (user_name)
@@ -487,7 +494,7 @@ def register():
             msg = 'Please fill out the form!'
         else:
             sql = 'INSERT INTO OPTIONS.ACCOUNT (USER_NAME, PASSWORD, EMAIL) VALUES (%s, %s, %s)'
-            values = (user_name, password, email)
+            values = (user_name, hash_password, email)
             mycursor = mydb.cursor()
             mycursor.execute(sql, values)
             mydb.commit()
