@@ -433,7 +433,7 @@ def login():
         #sql = "SELECT * FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "' AND PASSWORD = '" + password + "'"
         #values = (user_name, password)
 
-        sql = "SELECT * FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "'"
+        sql = "SELECT ID, USER_NAME, PASSWORD, EMAIL FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "'"
         values = (user_name)
 
         #print(sql)
