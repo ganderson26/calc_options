@@ -2,14 +2,14 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>My Flask App</title>
+      <title>Edit Transaction</title>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   </head>
    <body>
-      <form action = {{ edit_transaction_to_edit }} method = "post">
-
+      <div>
          <p><h1>Edit Transaction</h1></p>
-
+      <form action = {{ edit_transaction_to_edit }} method = "post">
+         
          <table class="onerow">
             <thead>
                <tr>
@@ -86,5 +86,6 @@
 
          <p><a href = {{ view_home }}>Back to Home</a></p>
       </form>
+   </div>
    </body>
 </html>

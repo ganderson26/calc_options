@@ -1,13 +1,20 @@
 <html>
-   <!--http://26miles.com/options/createoption-->
-   <!--http://127.0.0.1:5000/createoption-->
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Enter Option</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+	</head>
    <body>
+      <div>
+      <h1>Enter Option</h1>
       <form action = {{ create_option }} method = "post">
          <p><h1>Collecting data for future analysis.</h1></p>
          <p><h1>There is little error checking. Enter the data as described.</h1></p>
+         
          <p>User Name: (A way to identify your transactions. Not editable.) <input type="text" name="name" value={{ session.user_name }} readonly></p>
          <p>Ticker: (Stock symbol)<input type = "text" name = "ticker" placeholder="MSTR" required></p>
-         <p>Expiration Date: (mm-dd-yyyy) <input type = "text" name = "expiration_date" placeholder="12-20-2024" required></p>
+         <p>Expiration Date: (mm-dd-yyyy) <input type = "text" name = "expiration_date" placeholder="MM-DD-YYYY" required></p>
          <p>Strike: (Float) <input type = "text" name = "strike" placeholder="300.00" required></p>
          <p>
             <input type="radio" id="put" name="call_put" value="Put" checked="checked" required>
@@ -42,5 +49,6 @@
 
          <p><a href= {{ view_home }} >Back to Home</a></p>
       </form>
+      </div>
    </body>
 </html>

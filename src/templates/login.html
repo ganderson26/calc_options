@@ -3,10 +3,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title> Login </title>
-				 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Login</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 	</head>
 	<body>
+		<div>
 		<h1>Login</h1>
 		    <h2>
 				<form action = {{ view_login }} method="post">
@@ -17,5 +19,6 @@
 				</form>
 			</h2>
 			<p>Don't have an account? <a href = {{ send_register }}>Sign Up here</a></p>
+		</div>	
 	</body>
 </html>

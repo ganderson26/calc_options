@@ -1,0 +1,97 @@
+table.scrolldown {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
+
+
+  border-collapse: collapse;
+  
+  border-spacing: 0;
+  border: 2px solid black;
+}
+
+.tablestuff2 thead {
+  display: table-header-group;
+
+ 
+}
+
+
+
+/* To display the block as level element */
+
+table.scrolldown tbody,
+table.scrolldown thead {
+  display: block;
+  
+  border: 2px solid black;
+}
+
+table.scrolldown tbody {
+  height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+table.scrolldown tbody td,
+table.scrolldown thead th {
+  width: 200px;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+}
+
+
+/* Edit Transactions Page */
+table.onerow {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* border-collapse: collapse; */
+  border-spacing: 0;
+  border: 2px solid black;
+}
+
+/* To display the block as level element */
+table.onerow tbody,
+table.onerow thead {
+  display: block;
+}
+
+table.onerow tbody {
+
+  /* Set the height of table body */
+  /*height: 200px;*/
+
+  /* Set vertical scroll */
+  overflow-y: auto;
+
+  /* Hide the horizontal scroll */
+  overflow-x: hidden;
+}
+/* End */
+
+/* List Transactions Page */
+/*
+thead tr th {
+  height: 40px;
+  line-height: 40px;
+}
+
+
+tbody {
+  border-top: 2px solid black;
+}
+
+tbody td,
+thead th {
+  width: 200px;
+  border-right: 2px solid black;
+}
+
+td {
+  text-align: center;
+}
+*/
+

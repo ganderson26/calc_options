@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Option Result</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Option Result</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+	</head>
 <body>
+    <div>
+    
     <h1>Option Result</h1>
     <p>Name: {{ name }}</p>
     <p>Stock: {{ stock }}</p>
@@ -18,8 +23,16 @@
     <p>IV: {{ iv }}</p>
     <p>Notes: {{ notes }}</p>
     <p>Result: {{ result }}</p>
-
+    <p>Direction: {{ direction }}</p>
+    <p>Signal: {{ signal }}</p>
+    <p>Phase: {{ current_phase }}</p>
+    <p>Current Price: {{ current_price }}</p>
+    <p>Std Deviation: {{ np_std }}</p>
+    <p>Upper Bound: {{ upper_bound }}</p>
+    <p>Mean: {{ mean }}</p>
+    <p>Lower Bound: {{ lower_bound }}</p>
+   
     <p><a href = {{ view_home }}>Back to Home</a></p>
+    </div>
 </body>
 </html>
-

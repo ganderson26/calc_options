@@ -1,7 +1,12 @@
 <html>
-   <!--http://26miles.com/options/index-->
-   <!--http://127.0.0.1:5000/index-->
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Index</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
    <body>
+      <div>
       <h1>
          Hello {{session.user_name}}!</br>               
       </h1>
@@ -12,5 +17,6 @@
          <p><a href = {{ view_transactions }}>View/Edit Transactions</a></p>
          <p><a href = {{ send_logout }}>Logout</a></p>
       </form>
+   </div>
    </body>
 </html>

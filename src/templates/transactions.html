@@ -2,7 +2,7 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>My Flask App</title>
+      <title>Transactions List</title>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   </head>
   <script>
@@ -48,30 +48,41 @@
    }
   </script>
    <body>
-      <form id="myForm" action = {{ send_transaction_to_edit }} method = "post">
+      <div>
          <p><h1>View and Edit Transactions</h1></p>
-
-         <table class="scrolldown">
+      <form id="myForm" action = {{ send_transaction_to_edit }} method = "post">
+         
+         <div class="tableFixHead">   
+         <table class="fixed_header">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>USER_NAME</th>
+                    <th>UESR_NAME</th>
                     <th>TICKER</th>
-                    <th>EXPIRATION_DATE</th>
+                    <th>EXPIRATION</th>
                     <th>STRIKE</th>
                     <th>CALL_BUY</th>
                     <th>BUY_SELL</th>
                     <th>DELTA</th>
-                    <th>VOLUME</th>
+                    <th>VOL</th>
                     <th>BID_ASK</th>
                     <th>ROR</th>
                     <th>IV</th>
                     <th>NOTES</th>
                     <th>RESULT</th>    
+                    <th>DIR</th>
+                    <th>SIGNAL</th>
+                    <th>PHASE</th>
+                    <th>PRICE</th>
+                    <th>STDDEV</th>
+                    <th>UPPER</th>
+                    <th>MEAN</th>
+                    <th>LOWER</th>
                 </tr>
         </thead>
         
-        <tbody>
+        
+        <tbody> 
             {% for row in dbhtml %}
             <tr id="rows" onclick="callme(this)">
                 <td id="row_id" name="row_id" onclick="setRowId(this)">{{row.0}}</td>
@@ -88,11 +99,20 @@
                 <td>{{row.11}}</td>
                 <td>{{row.12}}</td>
                 <td>{{row.13}}</td>
+                <td>{{row.15}}</td>
+                <td>{{row.16}}</td>
+                <td>{{row.17}}</td>
+                <td>{{row.18}}</td>
+                <td>{{row.19}}</td>
+                <td>{{row.20}}</td>
+                <td>{{row.21}}</td>
+                <td>{{row.22}}</td>              
             </tr>
             {% endfor %}
         </tbody>
         
         </table>
+      </div>  
          
          <p><input id="edit" name="edit" type="submit" value="View and Edit" disabled/></p>
 
@@ -102,5 +122,6 @@
 
          <input type="hidden" id="selected_row_id" name="selected_row_id"/>
       </form>
+      </div>
    </body>
 </html>
