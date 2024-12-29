@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Option Result</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Option Result</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+	</head>
 <body>
-    <h1>Option Result</h1>
-    <p>Name: {{ name }}</p>
-    <p>Stock: {{ stock }}</p>
-    <p>Expiration Date: {{ expiry }}</p>
-    <p>Strike: {{ strike }}</p>
-    <p>Call/Put: {{ call_put }}</p>
-    <p>Buy/Sell: {{ buy_sell }}</p>
-    <p>Delta: {{ delta }}</p>
-    <p>Volume: {{ volume }}</p>
-    <p>Bid/Ask: {{ bid }}</p>
-    <p>ROR: {{ ror }}</p>
-    <p>IV: {{ iv }}</p>
-    <p>Notes: {{ notes }}</p>
-
+    <div>
+    
+    <h1>Option Result for {{session.user_name}}</h1>
+    <b>User Name:</b> {{ name }}</br>
+    <b>Stock:</b> {{ stock }}</br>
+    <b>Expiration Date:</b> {{ expiry }}</br>
+    <b>Strike:</b> {{ strike }}</br>
+    <b>Call/Put:</b> {{ call_put }}</br>
+    <b>Buy/Sell:</b> {{ buy_sell }}</br>
+    <b>Delta:</b> {{ delta }}</br>
+    <b>Volume:</b> {{ volume }}</br>
+    <b>Bid/Ask:</b> {{ bid }}</br>
+    <b>ROR:</b> {{ ror }}</br>
+    <b>IV:</b> {{ iv }}</br>
+    <b>Notes:</b> {{ notes }}</br>
+    <b>Result:</b> {{ result }}</br>
+    <b>Direction:</b> {{ direction }}</br>
+    <b>Signal:</b> {{ signal }}</br>
+    <b>Phase:</b> {{ current_phase }}</br>
+    <b>Current Price:</b> {{ current_price }}</br>
+    <b>Std Deviation:</b> {{ np_std }}</br>
+    <b>Upper Bound:</b> {{ upper_bound }}</br>
+    <b>Mean:</b> {{ mean }}</br>
+    <b>Lower Bound:</b> {{ lower_bound }}</br>
+   
     <p><a href = {{ view_home }}>Back to Home</a></p>
+    </div>
 </body>
 </html>
-

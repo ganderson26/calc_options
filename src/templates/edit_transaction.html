@@ -2,15 +2,15 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>My Flask App</title>
+      <title>Edit Transaction</title>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   </head>
    <body>
+      <div>
+         <p><h1>Edit Transaction for {{session.user_name}}</h1></p>
       <form action = {{ edit_transaction_to_edit }} method = "post">
-
-         <p><h1>Edit Transaction</h1></p>
-
-         <table class="onerow">
+         
+         <table>
             <thead>
                <tr>
                    <th>ID</th>
@@ -25,6 +25,14 @@
                    <th>BID_ASK</th>
                    <th>ROR</th>
                    <th>IV</th>
+                   <th>DIR</th>
+                   <th>SIGNAL</th>
+                   <th>PHASE</th>
+                   <th>PRICE</th>
+                   <th>STDDEV</th>
+                   <th>UPPER</th>
+                   <th>MEAN</th>
+                   <th>LOWER</th>
                </tr>
        </thead>
 
@@ -45,6 +53,14 @@
                 <td>{{row.9}}</td>
                 <td>{{row.10}}</td>
                 <td>{{row.11}}</td>
+                <td>{{row.15}}</td>
+                <td>{{row.16}}</td>
+                <td>{{row.17}}</td>
+                <td>{{row.18}}</td>
+                <td>{{row.19}}</td>
+                <td>{{row.20}}</td>
+                <td>{{row.21}}</td>
+                <td>{{row.22}}</td>
             </tr>  
            
 
@@ -86,5 +102,6 @@
 
          <p><a href = {{ view_home }}>Back to Home</a></p>
       </form>
+   </div>
    </body>
 </html>

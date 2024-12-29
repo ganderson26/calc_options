@@ -1,0 +1,18 @@
+.outer{
+    overflow-y: auto;
+    height:100px;
+    }
+
+.outer table{
+    width: 100%;
+    table-layout: fixed; 
+    border : 1px solid black;
+    border-spacing: 1px;
+}
+
+.outer table th {
+        text-align: left;
+        top:0;
+        position: sticky;
+        background-color: white;  
+}

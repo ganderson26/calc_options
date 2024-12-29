@@ -1,0 +1,25 @@
+table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+table th, table td{
+    text-align: left;
+    width: 25%;
+}
+
+table td{
+    border-bottom: 1px solid black;
+}
+
+table tbody{
+    display: block;
+    overflow: auto;
+    height: 200px;
+}
+
+ table thead{
+     width:100%;
+     display: table;
+ }

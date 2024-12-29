@@ -1,0 +1,65 @@
+div {
+    box-sizing: border-box;
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  body {
+    margin: 0;
+  }
+  table {
+    border-collapse: collapse;
+    background: #FFF;
+    table-layout: fixed;
+    width: 100%;
+  }
+  table thead {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #FFF;
+    display: table;
+    table-layout: fixed;
+    border: solid 1px #000;
+  }
+  table tbody {
+    margin-top: 24px;
+  }
+  table {
+    /*Make sure table has border that matches the cell border so it is included in the width*/
+    border: 1px solid black;
+  }
+  td,
+  th {
+    height: 20px;
+    border: 1px solid black;
+  }
+  .one {
+    width: 30px;
+    background-color: yellow;
+  }
+  .two {
+    width: 30px;
+    background-color: orange;
+  }
+  .three {
+    width: 30px;
+    background-color: red;
+  }
+  .four {
+    width: 100%;
+  }
+  .five {
+    width: 100px;
+    background-color: green;
+  }
+  .six {
+    width: 100px;
+    background-color: lightblue;
+  }
+  .seven {
+    width: 100px;
+  }
