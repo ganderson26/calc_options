@@ -137,3 +137,138 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # When registering a new user
 hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+std
+
+
+import pandas as pd
+
+# Get the stock data for Microsoft (MSFT)
+
+df = pd.read_csv('https://query1.finance.yahoo.com/v7/finance/download/MSFT?period1=1562540800&period2=1604184800&interval=1d&events=history')
+
+# Print the first 5 rows of the data
+
+print(df.head())
+
+# Calculate the mean close price for the stock
+
+mean_close_price = df['Close'].mean()
+
+print(f"Mean close price: {mean_close_price:.2f}")
+
+# Calculate the standard deviation of the close price for the stock
+
+std_close_price = df['Close'].std()
+
+print(f"Standard deviation of close price: {std_close_price:.2f}")
+
+
+
+# Momentum
+
+To calculate a momentum crossover in Python, you'll typically use two moving averages (e.g., a short-term and a long-term) and generate signals based on their interaction. Here's how you can do it using pandas: 
+import pandas as pd
+
+def calculate_momentum_crossover(data, short_window, long_window):
+    """Calculates momentum crossover signals.
+
+    Args:
+        data (pd.DataFrame): DataFrame containing the price data.
+        short_window (int): Window size for the short-term moving average.
+        long_window (int): Window size for the long-term moving average.
+
+    Returns:
+        pd.DataFrame: DataFrame with the original data and a 'signal' column.
+    """
+
+    data['short_ma'] = data['price'].rolling(window=short_window).mean()
+    data['long_ma'] = data['price'].rolling(window=long_window).mean()
+
+    data['signal'] = 0
+    data.loc[data['short_ma'] > data['long_ma'], 'signal'] = 1
+    data.loc[data['short_ma'] < data['long_ma'], 'signal'] = -1
+
+    return data
+
+# Example usage:
+data = pd.DataFrame({'price': [10, 12, 15, 13, 11, 16, 18, 20, 17, 15]})
+data = calculate_momentum_crossover(data, 3, 5)
+
+print(data)
+
+Explanation: 
+
+1. Import pandas: We import the pandas library for data manipulation. 
+2. Calculate Moving Averages: 
+	• We calculate the short-term and long-term moving averages using the rolling() function. 
+
+
+3. Generate Signals: 
+	• We initialize the 'signal' column with zeros. 
+	• When the short-term MA crosses above the long-term MA, we set the signal to 1 (buy signal). 
+	• When the short-term MA crosses below the long-term MA, we set the signal to -1 (sell signal). 
+
+
+
+Key points: 
+
+• You can customize the short_window and long_window parameters to adjust the sensitivity of the strategy. 
+• You can use different types of moving averages (e.g., simple, exponential) by modifying the rolling() function. 
+• This example generates simple buy/sell signals. You may want to add additional logic for filtering signals or managing risk. 
+
+
+Generative AI is experimental.
+
+[-] https://kritjunsree.medium.com/building-a-trading-bot-in-python-a-step-by-step-guide-with-examples-6898244016cd[-] https://kritjunsree.medium.com/building-a-trading-bot-in-python-a-step-by-step-guide-with-examples-6898244016cd
+
+
+
+
+
+# Price direction
+
+
+import pandas as pd
+import yfinance as yf
+
+def calculate_price_direction(ticker, days=20):
+    """Calculates the price direction of a stock over the past 'days'."""
+
+    # Fetch historical data using yfinance
+    data = yf.download(ticker, period=f"{days}d")
+
+    # Calculate the price change
+    price_change = data['Close'][-1] - data['Close'][0]
+
+    if price_change > 0:
+        return "Up"
+    elif price_change < 0:
+        return "Down"
+    else:
+        return "Flat"
+
+# Example usage
+ticker = "AAPL"
+direction = calculate_price_direction(ticker)
+print(f"The price direction of {ticker} over the past 20 days is: {direction}")
+
+Explanation: 
+
+1. Import Libraries: We import pandas for data manipulation and yfinance to fetch stock data. 
+2. calculate_price_direction() Function: 
+	• This function takes a stock ticker and the number of days as input. 
+	• It fetches the historical data for the specified number of days using yf.download(). 
+	• It calculates the price change by subtracting the closing price of the first day from the closing price of the last day. 
+	• It returns "Up" if the price change is positive, "Down" if negative, and "Flat" if no change. 
+
+
+3. Example Usage: 
+	• We provide a stock ticker (AAPL) and call the function to get the price direction. 
+	• The result is printed to the console. 
+
+
+
+
+Generative AI is experimental.
+

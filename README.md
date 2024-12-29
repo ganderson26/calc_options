@@ -6,6 +6,42 @@ calc_options
 
 Gather Option Data for the contract.
 
+## Authors
+
+Max Glenn Anderson
+
+## Version History
+* 0.5.0
+    * Better transactions.html scrollable tabe. Still have to scroll right, but now columns are aligned
+    * Added 'for user_name' to each html
+* 0.4.0
+    * Added market phase, price direction, standard deviation, upper bound, lower bound, mean, but or sell signal
+    * Refactored code into functions
+    * Altered OPTIONS_DATA table for new columns
+* 0.3.0
+    * Added Login/Register
+    * Use user_name for transactions instead of entering
+    * View transactions only for your user_name
+* 0.2.0
+    * Set connection variables based on environment variable LOCAL
+    * Export transactions to CSV
+    * Disable/Enable View Edit button on transactions.html
+* 0.1.0
+    * Initial Release
+
+## License
+
+* [LICENSE](LICENSE)
+
+## GitHub
+```
+git checkout -b branchname
+git add .
+git status
+git commit -m "message"
+git push -u origin branchname
+```
+
 ## Getting Started
 
 ### For Local Development
@@ -29,8 +65,16 @@ CREATE TABLE `OPTIONS_DATA` (
   `NOTES` varchar(256) DEFAULT NULL,
   `RESULT` varchar(45) DEFAULT NULL,
   `TRANS_TIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DIR` varchar(45) DEFAULT NULL,
+  `SIG` varchar(45) DEFAULT NULL,
+  `PHASE` varchar(45) DEFAULT NULL,
+  `CURRENT_PRICE` float DEFAULT NULL,
+  `STD_DEV` float DEFAULT NULL,
+  `UPPER` float DEFAULT NULL,
+  `MEAN` float DEFAULT NULL,
+  `LOWER` float DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 ```
 
 ```
@@ -49,6 +93,7 @@ CREATE TABLE `OPTIONS`.`ACCOUNT` (
 ```
 pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python Flask.Response
 pip install Werkzeug
+pip install yfinance
 ```
 
 #### Environment variable
@@ -137,16 +182,6 @@ pip install flask yahoo_fin numpy scipy pandas datetime mysql-connector-python F
 * On the cPanel Application, click Run or Restart
 * Click Open
 
-
-## GitHub
-```
-git checkout -b branchname
-git add .
-git status
-git commit -m "message"
-git push -u origin branchname
-```
-
 ## Help
 
 * If you get the following error:
@@ -159,25 +194,72 @@ pip uninstall mysql-connector-python
 pip install mysql-connector-python
 ```
 
-## Authors
-
-Max Glenn Anderson
-
-## Version History
-* 0.3.0
-    * Added Login/Register
-    * Use user_name for transactions instead of entering
-    * View transactions only for your user_name
-* 0.2.0
-    * Set connection variables based on environment variable LOCAL
-    * Export transactions to CSV
-    * Disable/Enable View Edit button on transactions.html
-* 0.1.0
-    * Initial Release
-
-## License
-
-* [LICENSE](LICENSE)
+* Pay attention to the package versions. yfinance version 0.2.51 return a different structure vs 0.2.38. I had to make sure to use 0.2.38 locally and on the server.
+* GoDaddy had yfinance 0.2.51. I had to SSH into the server and run:
+```
+pip install yfinance==0.2.38
+```
+* Server package versions
+```
+Package                Version
+---------------------- -----------
+appdirs                1.4.4
+beautifulsoup4         4.12.3
+blinker                1.9.0
+bs4                    0.0.2
+certifi                2024.12.14
+charset-normalizer     3.4.0
+click                  8.1.7
+cssselect              1.2.0
+DateTime               5.5
+fake-useragent         2.0.3
+feedparser             6.0.11
+Flask                  3.1.0
+flask_response         0.0.3
+frozendict             2.4.6
+html5lib               1.1
+idna                   3.10
+importlib_metadata     8.5.0
+importlib_resources    6.4.5
+itsdangerous           2.2.0
+Jinja2                 3.1.4
+lxml                   5.3.0
+MarkupSafe             3.0.2
+multitasking           0.0.11
+mysql-connector-python 9.1.0
+numpy                  2.0.2
+pampy                  0.3.0
+pandas                 2.2.3
+parse                  1.20.2
+peewee                 3.17.8
+pip                    24.3.1
+platformdirs           4.3.6
+pyee                   11.1.1
+pyppeteer              2.0.0
+pyquery                2.0.1
+python-dateutil        2.9.0.post0
+pytz                   2024.2
+requests               2.32.3
+requests-html          0.10.0
+scipy                  1.13.1
+setuptools             75.5.0
+sgmllib3k              1.0.0
+six                    1.17.0
+soupsieve              2.6
+tqdm                   4.67.1
+typing_extensions      4.12.2
+tzdata                 2024.2
+urllib3                1.26.20
+w3lib                  2.2.1
+webencodings           0.5.1
+websockets             10.4
+Werkzeug               3.1.3
+wheel                  0.45.1
+yahoo-fin              0.8.9.1
+yfinance               0.2.38
+zipp                   3.21.0
+zope.interface         7.2
+```
 
 ## Acknowledgments
 
