@@ -5,6 +5,7 @@
       <title>Transactions List</title>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   </head>
+
   <script>
   
    function callme(e)
@@ -48,12 +49,16 @@
    }
   </script>
    <body>
-      <div>
-         <p><h1>View and Edit Transactions</h1></p>
+      
+      <p><h1>View and Edit Transactions for {{session.user_name}}</h1></p>
       <form id="myForm" action = {{ send_transaction_to_edit }} method = "post">
          
-         <div class="tableFixHead">   
-         <table class="fixed_header">
+         <!--<div style="height: 150px; overflow: auto;">   
+         <table style="height: 400px;">-->
+
+            <div class="tableFixHead">
+               <table>
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -122,6 +127,6 @@
 
          <input type="hidden" id="selected_row_id" name="selected_row_id"/>
       </form>
-      </div>
+     
    </body>
 </html>

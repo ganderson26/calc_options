@@ -7,34 +7,22 @@
 	</head>
    <body>
       <div>
-      <h1>Enter Option</h1>
+      <h1>Enter Option for {{session.user_name}}</h1>
       <form action = {{ create_option }} method = "post">
          <p><h1>Collecting data for future analysis.</h1></p>
          <p><h1>There is little error checking. Enter the data as described.</h1></p>
+         <table>
+         <tr><td>User Name:</td><td><input type="text" name="name" value={{ session.user_name }} readonly></td></tr>
+         <tr><td>Ticker:</td><td><input type = "text" name = "ticker" placeholder="MSTR" required></td></tr>
+         <tr><td>Expiration Date:</td><td><input type = "text" name = "expiration_date" placeholder="MM-DD-YYYY" required></td></tr>
+         <tr><td>Strike:</td><td><input type = "text" name = "strike" placeholder="300.00" required></p>
+         <tr><td>Put:</td><td><input type="radio" id="put" name="call_put" value="Put" checked="checked" required></td></tr>
+         <tr><td>Call:</td><td><input type="radio" id="call" name="call_put" value="Call" required></td></tr>
+         <tr><td>Sell:</td><td><input type="radio" id="sell" name="buy_sell" value="Sell" checked="checked" required></td></tr>
+         <tr><td>Buy:</td><td><input type="radio" id="buy" name="buy_sell" value="Buy" required></td></tr>
+         <tr><td>Notes:</td><td><textarea id="notes" name="notes" rows="4" cols="50" required></textarea></td></tr>  
          
-         <p>User Name: (A way to identify your transactions. Not editable.) <input type="text" name="name" value={{ session.user_name }} readonly></p>
-         <p>Ticker: (Stock symbol)<input type = "text" name = "ticker" placeholder="MSTR" required></p>
-         <p>Expiration Date: (mm-dd-yyyy) <input type = "text" name = "expiration_date" placeholder="MM-DD-YYYY" required></p>
-         <p>Strike: (Float) <input type = "text" name = "strike" placeholder="300.00" required></p>
-         <p>
-            <input type="radio" id="put" name="call_put" value="Put" checked="checked" required>
-            <label for="put">Put</label>
-            <input type="radio" id="call" name="call_put" value="Call" required>
-            <label for="call">Call</label>    
-         </p>
-         <p>
-            <input type="radio" id="sell" name="buy_sell" value="Sell" checked="checked" required>
-            <label for="sell">Sell</label>
-            <input type="radio" id="buy" name="buy_sell" value="Buy" required>
-            <label for="buy">Buy</label>     
-         </p>
-         <p>
-            <label for="notes">Notes:</label>
-            <textarea id="notes" name="notes" rows="4" cols="50" required></textarea>   
-         </p>
-         <p>
-            <label for="result">Result:</label>
-            <select id="result" name="result">
+         <tr><td>Result:</td><td><select id="result" name="result">
                <option value="None">None</option>
                <option value="Assigned">Assigned</option>
                <option value="Called Away">Called Away</option>
@@ -43,7 +31,8 @@
                <option value="Open">Open</option>
                <option value="Rolled">Rolled</option>
              </select>  
-         </p>
+         </td></tr>  
+         </table>
 
          <p><input type = "submit" value = "Submit" /></p>
 
