@@ -11,6 +11,8 @@ Gather Option Data for the contract.
 Max Glenn Anderson
 
 ## Version History
+* 0.5.1
+    * Dropped application level database connection. Connecting and closing for each transaction
 * 0.5.0
     * Better transactions.html scrollable tabe. Still have to scroll right, but now columns are aligned
     * Added 'for user_name' to each html
