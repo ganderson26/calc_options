@@ -46,15 +46,20 @@ else:
     send_logout = "http://26miles.com/options/logout" 
     send_register = "http://26miles.com/options/register"
 
-# MySQL Connection
-mydb = mysql.connector.connect(
-host="localhost",
-user=mysql_user,
-password="Marathon#262",
-database="OPTIONS"
-)
+
 
 # Functions   
+def get_connection():
+    # MySQL Connection
+    mydb = mysql.connector.connect(
+    host="localhost",
+    user=mysql_user,
+    password="Marathon#262",
+    database="OPTIONS"
+    )
+
+    return mydb
+
 def black_scholes_delta(S, K, T, r, sigma, option_type='call'):
     """Calculate the Black-Scholes delta for a call or put option.
     
@@ -278,6 +283,8 @@ def login():
         sql = "SELECT ID, USER_NAME, PASSWORD, EMAIL FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "'"
         #values = (user_name)
 
+        mydb = get_connection()
+
         mycursor = mydb.cursor()
 
         mycursor.execute(sql)
@@ -293,6 +300,9 @@ def login():
                 return render_template('index.html', msg=msg, view_index=view_index, view_option=view_option, view_transactions=view_transactions, send_logout=send_logout)
         else:
             msg = 'Incorrect user_name / password!'
+
+        mycursor.close()
+        mydb.close()    
 
     return render_template('login.html', msg = msg, view_login=view_login, send_register=send_register)
  
@@ -315,6 +325,8 @@ def register():
         
         sql = "SELECT * FROM OPTIONS.ACCOUNT WHERE USER_NAME = '" + user_name + "'"
         values = (user_name)
+
+        mydb = get_connection()
         
         mycursor = mydb.cursor()
 
@@ -343,6 +355,10 @@ def register():
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
         msg = 'Please fill out the form!'
+
+
+    mycursor.close()
+    mydb.close()    
 
     return render_template('register.html', msg=msg, send_register=send_register, view_login=view_login)
 
@@ -501,6 +517,8 @@ def success(name, ticker, expiration_date, strike, call_put, buy_sell, notes, re
 
         print('sql:', sql)
 
+        mydb = get_connection()
+
         mycursor = mydb.cursor()
         
         app.logger.error("/success, mycursor.execute with values", values)
@@ -509,6 +527,9 @@ def success(name, ticker, expiration_date, strike, call_put, buy_sell, notes, re
         mycursor.execute(sql, values)
 
         mydb.commit()
+
+        mycursor.close()
+        mydb.close()
 
         app.logger.error("Returning from /success, going to option_result.html")
 
@@ -522,11 +543,16 @@ def transactions():
     try: 
         sql = "SELECT * FROM OPTIONS_DATA WHERE USER_NAME = '" + session['user_name'] + "'"
         
+        mydb = get_connection()
+
         mycursor = mydb.cursor() 
 
         mycursor.execute(sql) 
 
         db = mycursor.fetchall() 
+
+        mycursor.close()
+        mydb.close()
 
         return render_template("transactions.html", dbhtml=db, send_transaction_to_edit=send_transaction_to_edit, view_home=view_home)     
                                   
@@ -544,6 +570,8 @@ def send_transaction():
         try: 
             sql = "SELECT * FROM OPTIONS_DATA WHERE USER_NAME = '" + session['user_name'] + "'"
     
+            mydb = get_connection()
+
             mycursor = mydb.cursor() 
 
             mycursor.execute(sql) 
@@ -552,6 +580,10 @@ def send_transaction():
 
             # Create a temporary CSV file and serve it for download
             df = pd.DataFrame(db)
+
+            mycursor.close()
+            mydb.close()
+
             return Response(
                 df.to_csv(),
                 mimetype="text/csv",
@@ -561,11 +593,16 @@ def send_transaction():
             return(str(e))
     else:        
         try: 
+            mydb = get_connection()
+            
             mycursor = mydb.cursor() 
 
             mycursor.execute("SELECT * FROM OPTIONS_DATA WHERE ID = " + selected_row_id) 
 
             db = mycursor.fetchall() 
+
+            mycursor.close()
+            mydb.close()
 
             return render_template("edit_transaction.html", dbhtml=db, edit_transaction_to_edit=edit_transaction_to_edit, view_home=view_home)                                   
         except Exception as e: 
@@ -587,6 +624,10 @@ def edit_transaction():
 
     if operation == 'Edit':
         try: 
+            app.logger.error("Edit: getting connection")
+
+            mydb = get_connection()
+
             mycursor = mydb.cursor() 
 
             mycursor.execute("UPDATE OPTIONS_DATA SET NOTES = '" + notes + "', RESULT = '" + result + "' WHERE ID = " + row_id) 
@@ -599,12 +640,17 @@ def edit_transaction():
 
             db = mycursor.fetchall() 
 
+            mycursor.close()
+            mydb.close()
+
             return render_template("transactions.html", dbhtml=db, send_transaction_to_edit=send_transaction_to_edit, view_home=view_home)                                  
         except Exception as e: 
             return(str(e))    
                                       
     if operation == 'Delete':
         try: 
+            mydb = get_connection()
+
             mycursor = mydb.cursor() 
 
             mycursor.execute("DELETE FROM OPTIONS_DATA" + " WHERE ID = " + row_id) 
@@ -614,6 +660,9 @@ def edit_transaction():
             mycursor.execute("SELECT * FROM OPTIONS_DATA") 
 
             db = mycursor.fetchall() 
+
+            mycursor.close()
+            mydb.close()
 
             return render_template("transactions.html", dbhtml=db, send_transaction_to_edit=send_transaction_to_edit, view_home=view_home)                                  
         except Exception as e: 
