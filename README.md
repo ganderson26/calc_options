@@ -11,6 +11,8 @@ Gather Option Data for the contract.
 Max Glenn Anderson
 
 ## Version History
+* 0.7.0
+    * Added QUANTITY as updatable
 * 0.6.0
     * Added QUANTITY
 * 0.5.2
