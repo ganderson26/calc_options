@@ -11,6 +11,10 @@ Gather Option Data for the contract.
 Max Glenn Anderson
 
 ## Version History
+* 0.6.0
+    * Added QUANTITY
+* 0.5.2
+    * Check to see if session is active. If not, return to login page
 * 0.5.1
     * Dropped application level database connection. Connecting and closing for each transaction
 * 0.5.0
@@ -36,6 +40,7 @@ Max Glenn Anderson
 * [LICENSE](LICENSE)
 
 ## GitHub
+* Push branch
 ```
 git checkout -b branchname
 git add .
@@ -43,6 +48,11 @@ git status
 git commit -m "message"
 git push -u origin branchname
 ```
+
+* Merge to main Using GitHub    
+* Create Pull request
+* Squash and merge
+
 
 ## Getting Started
 
@@ -75,8 +85,9 @@ CREATE TABLE `OPTIONS_DATA` (
   `UPPER` float DEFAULT NULL,
   `MEAN` float DEFAULT NULL,
   `LOWER` float DEFAULT NULL,
+  `QUANTITY` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 ```
 
 ```
@@ -294,3 +305,4 @@ sigma = 0.2  # Volatility
 delta = black_scholes_delta(S, K, T, r, sigma, 'call')
 print(f"Delta of the call option: {delta:.4f}")
 ```
+

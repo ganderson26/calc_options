@@ -1,0 +1,298 @@
+https://host.godaddy.com/webhosting/cpanel/account/4b2a4b19-0f45-4c9b-b600-b4a837e5d68b/view
+
+50.63.7.156
+jejtxlk4zmlg
+Marathon#262
+
+source /home/jejtxlk4zmlg/virtualenv/options/2.7/bin/activate && cd /home/jejtxlk4zmlg/options
+
+https://p3plzcpnl505185.prod.phx3.secureserver.net:2083/cpsess3944159500/frontend/jupiter/index.html?login=1&post_login=86081395702217
+
+
+SSH
+(base) ganderson@Glenns-MacBook-Pro-3.local:~$ssh jejtxlk4zmlg@50.63.7.156
+jejtxlk4zmlg@50.63.7.156's password: 
+jejtxlk4zmlg@p3plzcpnl505185 [~]$ 
+
+
+
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/jejtxlk4zmlg/options"
+PassengerBaseURI "/"
+PassengerPython "/home/jejtxlk4zmlg/options/env/lib/python3.12"
+PassengerAppLogFile "/home/jejtxlk4zmlg/options/logs/app.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+# Turn off directory index if necessary
+Options -Indexes
+
+
+
+source /home/jejtxlk4zmlg/virtualenv/options/3.9/bin/activate && cd /home/jejtxlk4zmlg/options
+
+
+login
+https://www.geeksforgeeks.org/login-and-registration-project-using-flask-and-mysql/
+
+maybe add encryption and forgot password
+https://freelancefootprints.substack.com/p/yet-another-password-reset-tutorial
+
+
+
+Implementing user login and registration in a Flask app typically involves the following steps: 
+1. Installation: 
+pip install Flask Flask-Login Flask-WTF Werkzeug
+
+2. Create a User Model: 
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
+db = SQLAlchemy()
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+3. Create Login and Registration Forms: 
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, EqualTo, ValidationError
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm_password')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
+    submit = SubmitField('Register')
+
+4. Implement Login and Registration Routes: 
+from flask import Flask, render_template, redirect, url_for, flash
+from flask_login import login_user, logout_user, login_required
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your-secret-key' 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db' 
+db.init_app(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password')
+    return render_template('login.html', form=form)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Registration successful!')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
+
+5. Create Templates: 
+Create login.html and register.html templates to render the login and registration forms. 
+Important: 
+
+• Security: Ensure you handle passwords securely by hashing them using a strong hashing algorithm. 
+• Database: Choose a suitable database for your application and configure it accordingly. 
+• Error Handling: Implement proper error handling and validation to protect your application from security vulnerabilities. 
+• User Experience: Provide a user-friendly login and registration experience. 
+
+
+Generative AI is experimental.
+
+[-] https://www.kevin7.net/post_detail/user-registration-in-flask-backend-part-1-of-2[-] https://github.com/ginduc/odoo-flask-ng[-] https://python-commandments.org/flask-authentication/[-] https://blog.csdn.net/m0_37573740/article/details/130996037[-] https://stackoverflow.com/questions/76666122/flask-validation-not-logging-me-in[-] https://stackoverflow.com/questions/54422551/flask-login-remember-me-working-automatically[-] https://www.instructables.com/IOT-Based-Smart-Security-Surveillance-Robot/[-] https://stackoverflow.com/questions/57750075/wtforms-is-there-an-object-field[-] https://www.kevin7.net/post_detail/user-registration-in-flask-backend-part-1-of-2[-] https://github.com/ginduc/odoo-flask-ng[-] https://python-commandments.org/flask-authentication/
+
+
+from werkzeug.security import generate_password_hash, check_password_hash
+
+# When registering a new user
+hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+std
+
+
+import pandas as pd
+
+# Get the stock data for Microsoft (MSFT)
+
+df = pd.read_csv('https://query1.finance.yahoo.com/v7/finance/download/MSFT?period1=1562540800&period2=1604184800&interval=1d&events=history')
+
+# Print the first 5 rows of the data
+
+print(df.head())
+
+# Calculate the mean close price for the stock
+
+mean_close_price = df['Close'].mean()
+
+print(f"Mean close price: {mean_close_price:.2f}")
+
+# Calculate the standard deviation of the close price for the stock
+
+std_close_price = df['Close'].std()
+
+print(f"Standard deviation of close price: {std_close_price:.2f}")
+
+
+
+# Momentum
+
+To calculate a momentum crossover in Python, you'll typically use two moving averages (e.g., a short-term and a long-term) and generate signals based on their interaction. Here's how you can do it using pandas: 
+import pandas as pd
+
+def calculate_momentum_crossover(data, short_window, long_window):
+    """Calculates momentum crossover signals.
+
+    Args:
+        data (pd.DataFrame): DataFrame containing the price data.
+        short_window (int): Window size for the short-term moving average.
+        long_window (int): Window size for the long-term moving average.
+
+    Returns:
+        pd.DataFrame: DataFrame with the original data and a 'signal' column.
+    """
+
+    data['short_ma'] = data['price'].rolling(window=short_window).mean()
+    data['long_ma'] = data['price'].rolling(window=long_window).mean()
+
+    data['signal'] = 0
+    data.loc[data['short_ma'] > data['long_ma'], 'signal'] = 1
+    data.loc[data['short_ma'] < data['long_ma'], 'signal'] = -1
+
+    return data
+
+# Example usage:
+data = pd.DataFrame({'price': [10, 12, 15, 13, 11, 16, 18, 20, 17, 15]})
+data = calculate_momentum_crossover(data, 3, 5)
+
+print(data)
+
+Explanation: 
+
+1. Import pandas: We import the pandas library for data manipulation. 
+2. Calculate Moving Averages: 
+	• We calculate the short-term and long-term moving averages using the rolling() function. 
+
+
+3. Generate Signals: 
+	• We initialize the 'signal' column with zeros. 
+	• When the short-term MA crosses above the long-term MA, we set the signal to 1 (buy signal). 
+	• When the short-term MA crosses below the long-term MA, we set the signal to -1 (sell signal). 
+
+
+
+Key points: 
+
+• You can customize the short_window and long_window parameters to adjust the sensitivity of the strategy. 
+• You can use different types of moving averages (e.g., simple, exponential) by modifying the rolling() function. 
+• This example generates simple buy/sell signals. You may want to add additional logic for filtering signals or managing risk. 
+
+
+Generative AI is experimental.
+
+[-] https://kritjunsree.medium.com/building-a-trading-bot-in-python-a-step-by-step-guide-with-examples-6898244016cd[-] https://kritjunsree.medium.com/building-a-trading-bot-in-python-a-step-by-step-guide-with-examples-6898244016cd
+
+
+
+
+
+# Price direction
+
+
+import pandas as pd
+import yfinance as yf
+
+def calculate_price_direction(ticker, days=20):
+    """Calculates the price direction of a stock over the past 'days'."""
+
+    # Fetch historical data using yfinance
+    data = yf.download(ticker, period=f"{days}d")
+
+    # Calculate the price change
+    price_change = data['Close'][-1] - data['Close'][0]
+
+    if price_change > 0:
+        return "Up"
+    elif price_change < 0:
+        return "Down"
+    else:
+        return "Flat"
+
+# Example usage
+ticker = "AAPL"
+direction = calculate_price_direction(ticker)
+print(f"The price direction of {ticker} over the past 20 days is: {direction}")
+
+Explanation: 
+
+1. Import Libraries: We import pandas for data manipulation and yfinance to fetch stock data. 
+2. calculate_price_direction() Function: 
+	• This function takes a stock ticker and the number of days as input. 
+	• It fetches the historical data for the specified number of days using yf.download(). 
+	• It calculates the price change by subtracting the closing price of the first day from the closing price of the last day. 
+	• It returns "Up" if the price change is positive, "Down" if negative, and "Flat" if no change. 
+
+
+3. Example Usage: 
+	• We provide a stock ticker (AAPL) and call the function to get the price direction. 
+	• The result is printed to the console. 
+
+
+
+
+Generative AI is experimental.
+
+Sessions
+
+In Flask, the default session timeout depends on how you've configured your sessions: 
+Default Behavior with Flask-Session: 
+
+• Permanent Sessions: If you are using the Flask-Session extension, sessions are permanent by default, with an expiration of 31 days. This means a session cookie will be stored in the user's browser and will remain valid for 31 days unless explicitly cleared. 
+• Server-Side Expiration: Regardless of the SESSION_PERMANENT setting, Flask-Session always sets a server-side expiration time using PERMANENT_SESSION_LIFETIME. This ensures that even if the user's cookie is still valid, the session data on the server will expire after the specified time. 
+
+Configuring Session Timeout: 
+To customize the session timeout, you can modify the PERMANENT_SESSION_LIFETIME configuration setting: 
+from datetime import timedelta
+
+app = Flask(__name__)
+
+# Set session timeout to 1 hour
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
+
+Non-Permanent Sessions: 
+If you don't want to use permanent sessions, you can set SESSION_PERMANENT to False. In this case, the session cookie will be deleted when the user closes their browser. 
+app.config['SESSION_PERMANENT'] = False
+
+
+Generative AI is experimental.
+
