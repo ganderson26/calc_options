@@ -15,7 +15,6 @@
                <tr>
                    <th>ID</th>
                    <th>USER_NAME</th>
-                   <th>QTY</th>
                    <th>TICKER</th>
                    <th>EXPIRATION_DATE</th>
                    <th>STRIKE</th>
@@ -44,7 +43,6 @@
             <tr>
                <td>{{row.0}}</td>
                <td>{{row.1}}</td>
-               <td>{{row.23}}</td>
                 <td>{{row.2}}</td>
                 <td>{{row.3}}</td>
                 <td>{{row.4}}</td>
@@ -74,6 +72,9 @@
 
          {% for row in dbhtml %}
             <p><input type="hidden" id="row_id" name="row_id" value={{row.0}}></p>
+
+            <p>Quantity:
+               <input id="quantity" name="quantity" value={{row.23}}></p>
 
             <p>Notes:
             <textarea id="notes" name="notes" rows="4" cols="50">{{row.12}}</textarea></p>
