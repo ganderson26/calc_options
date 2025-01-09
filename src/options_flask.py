@@ -60,6 +60,20 @@ def get_connection():
 
     return mydb
 
+def show_mysql_variables():
+    mydb = get_connection()
+
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SHOW VARIABLES")
+
+    app.logger.error("MySQL Variables:")
+    for x in mycursor:
+        app.logger.error(x)
+
+    mycursor.close()
+    mydb.close()
+
 def black_scholes_delta(S, K, T, r, sigma, option_type='call'):
     """Calculate the Black-Scholes delta for a call or put option.
     
@@ -259,6 +273,7 @@ def calculate_price_direction(ticker):
 # Create Flask app and set secret key for session variables
 app = Flask(__name__)
 app.secret_key = 'marathon'
+
 app.logger.setLevel(logging.ERROR)
 
 # Test Log levels
@@ -267,6 +282,18 @@ app.logger.info("Info log information")
 app.logger.warning("Warning log info")
 app.logger.error("Error log info")
 app.logger.critical("Critical log info")
+
+#app.logger.error("app.config['PERMANENT_SESSION_LIFETIME']:", app.config['PERMANENT_SESSION_LIFETIME'])
+#app.logger.error("app.config['SESSION_PERMANENT']:", app.config['SESSION_PERMANENT'])
+
+# Print all config values
+#app.logger.error("All app.config values:")
+#for key, value in app.config.items():
+#    app.logger.error(f"{key}: {value}")
+#app.logger.error("Error log info")
+
+# Print MySQL Variables
+##show_mysql_variables()  
 
 # Routes
 @app.route('/')
@@ -374,6 +401,7 @@ def option():
 def createoption():
     if request.method == 'POST':
         name = request.form['name']
+        quantity = request.form['quantity']
         ticker = request.form['ticker']
         expiration_date = request.form['expiration_date']
         strike = request.form['strike']
@@ -382,9 +410,10 @@ def createoption():
         notes = request.form['notes']
         result = request.form['result']
     
-        return redirect(url_for('success', name=name, ticker=ticker, expiration_date=expiration_date, strike=strike, call_put=call_put, buy_sell=buy_sell, notes=notes, result=result))
+        return redirect(url_for('success', name=name, quantity=quantity, ticker=ticker, expiration_date=expiration_date, strike=strike, call_put=call_put, buy_sell=buy_sell, notes=notes, result=result))
     else:
         user = request.args.get('name')
+        quantity = request.args.get['quantity']
         ticker = request.args.get['ticker']
         expiration_date = request.args.get['expiration_date']
         strike = request.args.get['strike']
@@ -393,10 +422,10 @@ def createoption():
         notes = request.args.get['notes']
         result = request.args.get['result']
 
-        return redirect(url_for('success', name=name, ticker=ticker, expiration_date=expiration_date, strike=strike, call_put=call_put, buy_sell=buy_sell, notes=notes, result=result))
+        return redirect(url_for('success', name=name, quantity=quantity, ticker=ticker, expiration_date=expiration_date, strike=strike, call_put=call_put, buy_sell=buy_sell, notes=notes, result=result))
 
-@app.route('/success/<name>/<ticker>/<expiration_date>/<strike>/<call_put>/<buy_sell>/<notes>/<result>')
-def success(name, ticker, expiration_date, strike, call_put, buy_sell, notes, result):
+@app.route('/success/<name>/<quantity>/<ticker>/<expiration_date>/<strike>/<call_put>/<buy_sell>/<notes>/<result>')
+def success(name, quantity, ticker, expiration_date, strike, call_put, buy_sell, notes, result):
     try:
         # Get option data
         stock = ticker
@@ -512,8 +541,8 @@ def success(name, ticker, expiration_date, strike, call_put, buy_sell, notes, re
         app.logger.error("Getting price direction")
         direction = calculate_price_direction(ticker)
 
-        sql = "INSERT INTO OPTIONS_DATA (USER_NAME, TICKER, EXPIRATION_DATE, STRIKE, CALL_PUT, BUY_SELL, DELTA, VOLUME, BID_ASK, ROR, IV, NOTES, RESULT, DIR, SIG, PHASE, CURRENT_PRICE, STD_DEV, UPPER, MEAN, LOWER) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        values = (name, str_stock, str_expiry, str_strike, call_put, buy_sell, option_delta, option_volume, option_bid, option_ror, str_iv, notes, result, direction, signal, current_phase, close_price, np_std, upper_bound, mean, lower_bound)
+        sql = "INSERT INTO OPTIONS_DATA (USER_NAME, QUANTITY, TICKER, EXPIRATION_DATE, STRIKE, CALL_PUT, BUY_SELL, DELTA, VOLUME, BID_ASK, ROR, IV, NOTES, RESULT, DIR, SIG, PHASE, CURRENT_PRICE, STD_DEV, UPPER, MEAN, LOWER) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (name, quantity, str_stock, str_expiry, str_strike, call_put, buy_sell, option_delta, option_volume, option_bid, option_ror, str_iv, notes, result, direction, signal, current_phase, close_price, np_std, upper_bound, mean, lower_bound)
 
         print('sql:', sql)
 
@@ -533,7 +562,7 @@ def success(name, ticker, expiration_date, strike, call_put, buy_sell, notes, re
 
         app.logger.error("Returning from /success, going to option_result.html")
 
-        return render_template('option_result.html', view_home=view_home, name=name, stock=str_stock, expiry=str_expiry, strike=str_strike, call_put=call_put, buy_sell=buy_sell, delta=option_delta, volume=option_volume, bid=option_bid, ror=option_ror, iv=option_iv, notes=notes, result=result, direction=direction, signal=signal, current_phase=current_phase, current_price=current_price, np_std=np_std, upper_bound=upper_bound, mean=mean, lower_bound=lower_bound)
+        return render_template('option_result.html', view_home=view_home, quantity=quantity, name=name, stock=str_stock, expiry=str_expiry, strike=str_strike, call_put=call_put, buy_sell=buy_sell, delta=option_delta, volume=option_volume, bid=option_bid, ror=option_ror, iv=option_iv, notes=notes, result=result, direction=direction, signal=signal, current_phase=current_phase, current_price=current_price, np_std=np_std, upper_bound=upper_bound, mean=mean, lower_bound=lower_bound)
 
     except Exception as e:
         return render_template('error.html', view_error=e, view_home=view_home)    
@@ -541,6 +570,11 @@ def success(name, ticker, expiration_date, strike, call_put, buy_sell, notes, re
 @app.route('/transactions')
 def transactions():
     try: 
+        # Check to see if there is still an active session
+        if 'loggedin' not in session:
+            app.logger.error("Session is gone, returning to login")
+            return render_template('login.html', view_login=view_login, send_register=send_register)
+
         sql = "SELECT * FROM OPTIONS_DATA WHERE USER_NAME = '" + session['user_name'] + "'"
         
         mydb = get_connection()
@@ -568,6 +602,12 @@ def send_transaction():
 
     if selected_row_id == "download":
         try: 
+            # Check to see if there is still an active session
+            if 'loggedin' not in session:
+                app.logger.error("Session is gone, returning to login")
+                return render_template('login.html', view_login=view_login, send_register=send_register)
+        
+
             sql = "SELECT * FROM OPTIONS_DATA WHERE USER_NAME = '" + session['user_name'] + "'"
     
             mydb = get_connection()
@@ -624,6 +664,11 @@ def edit_transaction():
 
     if operation == 'Edit':
         try: 
+            # Check to see if there is still an active session
+            if 'loggedin' not in session:
+                app.logger.error("Session is gone, returning to login")
+                return render_template('login.html', view_login=view_login, send_register=send_register)
+        
             app.logger.error("Edit: getting connection")
 
             mydb = get_connection()

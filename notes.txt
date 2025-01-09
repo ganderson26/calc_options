@@ -272,3 +272,27 @@ Explanation:
 
 Generative AI is experimental.
 
+Sessions
+
+In Flask, the default session timeout depends on how you've configured your sessions: 
+Default Behavior with Flask-Session: 
+
+• Permanent Sessions: If you are using the Flask-Session extension, sessions are permanent by default, with an expiration of 31 days. This means a session cookie will be stored in the user's browser and will remain valid for 31 days unless explicitly cleared. 
+• Server-Side Expiration: Regardless of the SESSION_PERMANENT setting, Flask-Session always sets a server-side expiration time using PERMANENT_SESSION_LIFETIME. This ensures that even if the user's cookie is still valid, the session data on the server will expire after the specified time. 
+
+Configuring Session Timeout: 
+To customize the session timeout, you can modify the PERMANENT_SESSION_LIFETIME configuration setting: 
+from datetime import timedelta
+
+app = Flask(__name__)
+
+# Set session timeout to 1 hour
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
+
+Non-Permanent Sessions: 
+If you don't want to use permanent sessions, you can set SESSION_PERMANENT to False. In this case, the session cookie will be deleted when the user closes their browser. 
+app.config['SESSION_PERMANENT'] = False
+
+
+Generative AI is experimental.
+

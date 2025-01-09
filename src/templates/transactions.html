@@ -63,6 +63,7 @@
                 <tr>
                     <th>ID</th>
                     <th>UESR_NAME</th>
+                    <th>QTY</th>
                     <th>TICKER</th>
                     <th>EXPIRE</th>
                     <th>STRIKE</th>
@@ -92,6 +93,7 @@
             <tr id="rows" onclick="callme(this)">
                 <td id="row_id" name="row_id" onclick="setRowId(this)">{{row.0}}</td>
                 <td>{{row.1}}</td>
+                <td>{{row.23}}</td>  
                 <td>{{row.2}}</td>
                 <td>{{row.3}}</td>
                 <td>{{row.4}}</td>
@@ -111,7 +113,8 @@
                 <td>{{row.19}}</td>
                 <td>{{row.20}}</td>
                 <td>{{row.21}}</td>
-                <td>{{row.22}}</td>              
+                <td>{{row.22}}</td> 
+                            
             </tr>
             {% endfor %}
         </tbody>
