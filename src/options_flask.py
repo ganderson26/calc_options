@@ -655,11 +655,13 @@ def edit_transaction():
         row_id = request.form['row_id']
         result = request.form['result']
         notes = request.form['notes']
+        quantity = request.form['quantity']
     else:
         operation = request.args.get['operation']
         row_id = request.args.get['row_id']
         result = request.args.get['result']
         notes = request.args.get['notes']
+        quantity = request.args.get['quantity']
 
 
     if operation == 'Edit':
@@ -675,7 +677,7 @@ def edit_transaction():
 
             mycursor = mydb.cursor() 
 
-            mycursor.execute("UPDATE OPTIONS_DATA SET NOTES = '" + notes + "', RESULT = '" + result + "' WHERE ID = " + row_id) 
+            mycursor.execute("UPDATE OPTIONS_DATA SET QUANTITY = '" + quantity + "', NOTES = '" + notes + "', RESULT = '" + result + "' WHERE ID = " + row_id) 
 
             mydb.commit()
 
