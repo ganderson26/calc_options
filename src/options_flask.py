@@ -379,13 +379,13 @@ def register():
 
             mydb.commit()
 
+            mycursor.close()
+            mydb.close()    
+
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
         msg = 'Please fill out the form!'
 
-
-    mycursor.close()
-    mydb.close()    
 
     return render_template('register.html', msg=msg, send_register=send_register, view_login=view_login)
 
