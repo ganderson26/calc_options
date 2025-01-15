@@ -11,6 +11,8 @@ Gather Option Data for the contract.
 Max Glenn Anderson
 
 ## Version History
+* 0.7.1
+    * Fixed issue with closing cursor during account registration
 * 0.7.0
     * Added QUANTITY as updatable
 * 0.6.0
