@@ -11,6 +11,8 @@ Gather Option Data for the contract.
 Max Glenn Anderson
 
 ## Version History
+* 0.7.2
+    * Fixed issue with deleting a transactio was not filtering out transactions for session user
 * 0.7.1
     * Fixed issue with closing cursor during account registration
 * 0.7.0
