@@ -704,7 +704,9 @@ def edit_transaction():
 
             mydb.commit()
 
-            mycursor.execute("SELECT * FROM OPTIONS_DATA") 
+            sql = "SELECT * FROM OPTIONS_DATA WHERE USER_NAME = '" + session['user_name'] + "'"
+
+            mycursor.execute(sql) 
 
             db = mycursor.fetchall() 
 
